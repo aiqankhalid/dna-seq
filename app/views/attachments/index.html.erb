@@ -1,6 +1,4 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Attachments</h1>
+<h1>Sequences</h1>
 
 <table>
   <thead>
@@ -14,10 +12,10 @@
   <tbody>
     <% @attachments.each do |attachment| %>
       <tr>
-        <td><%= attachment.sequence %></td>
-        <td><%= attachment.type_id %></td>
+        <td width="80%"><%= truncate(attachment.sequence, length: 200) %></td>
+        <td><%= attachment.type.try(:name) %></td>
         <td><%= link_to 'Show', attachment %></td>
-        <td><%= link_to 'Edit', edit_attachment_path(attachment) %></td>
+        <td><%= link_to 'Download', "/attachments/download?id=#{attachment.id}" %></td>
         <td><%= link_to 'Destroy', attachment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -26,4 +24,4 @@
 
 <br>
 
-<%= link_to 'New Attachment', new_attachment_path %>
+<%= link_to 'New Sequence', new_attachment_path %>

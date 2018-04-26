@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= content_for?(:title) ? yield(:title) : "Rails Devise" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : 'Dna Sequence Converter' %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Rails Devise" %>">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -15,6 +15,12 @@
     <main role="main">
        <%= render 'layouts/messages' %>
        <%= yield %>
+
+
     </main>
+    <br/>
+    <br/>
+    <br/>
+    IMPORTANT! Do not convert your sequence files to a ".doc" file or open them in any word processing program. Sequence formats can be corrupted by cryptic changes introduced by word-processing programs and thus cause failures of sequence analysis tools.
   </body>
 </html>

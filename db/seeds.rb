@@ -13,3 +13,5 @@ Type.where(name: 'GCG').first_or_create
 Type.where(name: 'GenBank').first_or_create
 Type.where(name: 'IG').first_or_create
 Type.where(name: 'Plain Sequence').first_or_create
+
+User.create(email:'admin@dna.com', password: '12345678', password_confirmation: '12345678', name: 'Super Admin')

@@ -1,14 +1,30 @@
-<p id="notice"><%= notice %></p>
 
+<p class="pull-right">
+
+  <%= link_to 'Download Sequence', "/attachments/download?id=#{@attachment.id}" %>
+</p>
 <p>
-  <strong>Sequence:</strong>
-  <%= @attachment.sequence %>
+  <strong>Original Sequence:</strong>
+  <br/>
+  <br/>
+
+  <%if @attachment.data.present? %>
+      <textarea rows="10" cols="120"><%= raw(@attachment.sequence) %></textarea>
+  <% end %>
+
 </p>
 
 <p>
-  <strong>Type:</strong>
-  <%= @attachment.type_id %>
+  <strong>Converted Sequence:</strong>
+  <br/>
+
+  <%= @attachment.type.try(:name) %>
+  <br/>
+  <br/>
+  <%if @attachment.data.present? %>
+      <textarea rows="25" cols="120"><%= raw(@attachment.data) %></textarea>
+  <% end %>
 </p>
 
-<%= link_to 'Edit', edit_attachment_path(@attachment) %> |
+<%#= link_to 'Edit', edit_attachment_path(@attachment) %>
 <%= link_to 'Back', attachments_path %>
