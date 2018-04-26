@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Type.where(name: 'FASTA').first_or_create
-Type.where(name: 'FASTAQ').first_or_create
+# Type.where(name: 'FASTAQ').first_or_create
 Type.where(name: 'EMBL').first_or_create
 Type.where(name: 'GCG').first_or_create
 Type.where(name: 'GenBank').first_or_create

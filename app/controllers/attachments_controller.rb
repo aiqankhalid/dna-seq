@@ -47,7 +47,7 @@ class AttachmentsController < ApplicationController
           file << params[:attachment][:sequence]
         end
 
-        saved_file = `sreformat #{type.name.downcase} #{Rails.root.join('tmp', "#{@attachment.id}" + '.txt')}`
+        saved_file = `sreformat #{type.name == 'Plain Sequence' ? 'raw' :  type.name.downcase} #{Rails.root.join('tmp', "#{@attachment.id}" + '.txt')}`
         @attachment.update(data: saved_file)
         format.html { redirect_to @attachment, notice: 'Sequence was successfully converted.' }
         format.json { render :show, status: :created, location: @attachment }
