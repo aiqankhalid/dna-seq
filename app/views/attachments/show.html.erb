@@ -9,7 +9,7 @@
   <br/>
 
   <%if @attachment.data.present? %>
-      <textarea rows="10" cols="120"><%= raw(@attachment.sequence) %></textarea>
+      <textarea rows="15" cols="70"><%= raw(@attachment.sequence) %></textarea>
   <% end %>
 
 </p>
@@ -22,7 +22,7 @@
   <br/>
   <br/>
   <%if @attachment.data.present? %>
-      <textarea rows="25" cols="120"><%= raw(@attachment.data) %></textarea>
+      <textarea rows="15" cols="70"><%= raw(@attachment.data) %></textarea>
   <% end %>
 </p>
 

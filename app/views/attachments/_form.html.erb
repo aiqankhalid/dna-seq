@@ -1,34 +1,260 @@
 <%= form_for(attachment) do |f| %>
-    <% if attachment.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(attachment.errors.count, "error") %> prohibited this attachment from being saved:</h2>
+  <% if attachment.errors.any? %>
+    <div id="error_explanation" class="introtext" style="margin-left: 280px;">
+      <h2><%= pluralize(attachment.errors.count, "error") %> prohibited this attachment from being saved:</h2>
 
-          <ul>
-            <% attachment.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
-
-    <div class="field">
-      <%= f.label :sequence %>
-      <%= f.text_area :sequence, class: 'required', size: '100x15' %>
+      <ul>
+        <% attachment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
     </div>
+  <% end %>
 
-    <div class="field">
-      <%= f.label :type_id %>
-      <%= f.collection_select :type_id, Type.order(:name), :id, :name, include_blank: true, class: 'required' %>
-    </div>
 
-    <div class="actions">
-      <%= f.submit %>
-    </div>
+  <div class="introtext">
+    <br/>
 
+
+    <h1>Format Converter</h1>
+    <P><b>Purpose:</b> Convert an input sequence or alignment to a user-specified format.
+      <!-- Start of Input Table -->
+    <div class="paramtablehead">Input:</div>
+    <table class="paramtable">
+      <tr>
+        <td class="textcell">
+          <b> Paste Your Sequences Here: </b> </br>
+        </td>
+        <td class="inputcell">
+
+          <div class="field">
+            <%= f.text_area :sequence, class: 'required', size: '55x6' %>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+
+    <!-- Start of Options Table -->
+    <div class="paramtablehead">Options</div>
+    <table class="paramtable">
+      <tr>
+        <td align="right">
+          <span class="searchfieldlabel">Select output format</span>
+        </td>
+        <td class="inputcell">
+
+          <%= f.collection_select :type_id, Type.order(:name), :id, :name, class: 'required' %>
+        </td>
+      </tr>
+
+
+      <!-- Output Line Width -->
+      <tr>
+        <td align="right">
+          <span class="searchfieldlabel">Output line width</span>
+        </td>
+        <td align="left"><INPUT TYPE=radio NAME=w VALUE="" CHECKED>50 characters
+        </td>
+      </tr>
+
+
+
+    </table>
+      <div class="submitreset">
+        <%= f.submit value: 'Submit', onclick: "if ((seq_input.value != '' && upfile1.value != '') || (seq_input.value == '' && upfile1.value == ''))
+                           {
+                               alert('Please either paste your sequence set or upload a file.')
+                               return false;
+                               }
+                           else
+                           {
+                               form.submit();
+                               }" %>
+        <input type=reset value="Reset" onClick="reset_form()">
+        <%= link_to 'Back', attachments_path %>
+      </div>
 <% end %>
 
 <% unless @attachment.new_record? %>
-    <% unless @attachment.data.blank? %>
-        <%= @attachment.data %>
-    <% end %>
+  <% unless @attachment.data.blank? %>
+    <%= @attachment.data %>
+  <% end %>
 <% end %>
+
+
+<!-- Submit & Reset Button -->
+
+<p><strong>IMPORTANT!</strong> Do not convert your sequence files to a ".doc" file or open them in any word processing
+  program. Sequence formats can be corrupted by cryptic changes introduced by word-processing programs and thus cause
+  failures of sequence analysis tools.</p>
+</FORM>
+
+<!-- Space <p>&nbsp;</p>  -->
+<!-- HR Line-->
+<br>
+<hr>
+
+<!-- Sequence Types -->
+<div class="introtext"></div>
+<br>
+<h1>Sequence Types:</h1>
+</br>
+<p>Below are examples of some of the alignment formats.</p>
+
+<table width="90%">
+  <tbody>
+  <tr>
+    <td>
+
+      <!-- Plain Sequence-->
+      <p id="FASTA"><strong>PLAIN SEQUENCE:</strong></p>
+      <pre>
+ACAAGATGCCATTGTCCCCCGGCCTCCTGCTGCTGCTGCTCTCCGGGGCCACGGCCACCGCTGCCCTGCC
+CCTGGAGGGTGGCCCCACCGGCCGAGACAGCGAGCATATGCAGGAAGCGGCAGGAATAAGGAAAAGCAGC
+CTCCTGACTTTCCTCGCTTGGTGGTTTGAGTGGACCTCCCAGGCCAGTGCCGGGCCCCTCATAGGAGAGG
+AAGCTCGGGAGGTGGCCAGGCGGCAGGAAGGCGCACCCCCCCAGCAATCCGCGCGCCGGGACAGAATGCC
+CTGCAGGAACTTCTTCTGGAAGACCTTCTCCTCCTGCAAATAAAACCTCACCCATGAATGCTCACGCAAG
+TTTAATTACAGACCTGAA
+</pre>
+
+      <!-- FASTA -->
+      <p id="FASTA"><strong>FASTA:</strong></p>
+      <pre>&gt;CPZANT
+ATGGGAGCGGGGGCGTCTGTTTTGAGGGGAGAGAAGCTAGATACATGGGA
+AAGTATCAGGCTTCGGCCCGGTGGCAAGAAAAAGTACATGATAAAACATC
+TGGTTTGGGCAAGATCGGAGCTGCAGCGTTTTGCGCTCAGCTCCTCCCTT
+CTAGAAACATCAGAAGGTTGTGAAAAGGCTATCCATCAATTGAGCCCTTC
+CATAGAAATAAGATCCCCTGAAATAATATCTTTGTTTAACACCATTTGTG
+&gt;U455
+ATGGGTGCGAGAGCGTCAGTATTAAGCGGGAAAAAATTAGATTCATGGGA
+GAAAATTCGGTTAAGGCCAGGGGGAAACAAAAAATATAGACTGAAACATT
+TAGTATGGGCAAGCAGGGAGCTGGAAAAATTCACACTTAACCCTGGCCTT
+TTAGAAACAGCAGAAGGATGTCAGCAAATACTGGGACAATTACAACCAGC
+TCTCCAGACAGGAACAGAAGAACTTAGATCATTATATAATACAGTAGCAG
+</pre>
+
+      <!-- FASTQ -->
+      <p id="FASTA"><strong>FASTQ:</strong></p>
+      <pre>@SEQUENCE_ID
+GTGGAAGTTCTTAGGGCATGGCAAAGAGTCAGAATTTGAC
++
+FAFFADEDGDBGEGGBCGGHE>EEBA@@=
+</pre>
+
+      <!-- EMBL -->
+      <p id="FASTA"><strong>EMBL:</strong></p>
+      <pre>&gt;CPZANT
+ID   AB000263 standard; RNA; PRI; 368 BP.
+XX
+AC   AB000263;
+XX
+DE   Homo sapiens mRNA for prepro cortistatin like peptide, complete cds.
+XX
+SQ   Sequence 368 BP;
+     acaagatgcc attgtccccc ggcctcctgc tgctgctgct ctccggggcc acggccaccg        60
+     ctgccctgcc cctggagggt ggccccaccg gccgagacag cgagcatatg caggaagcgg       120
+     caggaataag gaaaagcagc ctcctgactt tcctcgcttg gtggtttgag tggacctccc       180
+     aggccagtgc cgggcccctc ataggagagg aagctcggga ggtggccagg cggcaggaag       240
+     gcgcaccccc ccagcaatcc gcgcgccggg acagaatgcc ctgcaggaac ttcttctgga       300
+     agaccttctc ctcctgcaaa taaaacctca cccatgaatg ctcacgcaag tttaattaca       360
+     gacctgaa                                                                368
+//
+</pre>
+
+      <!-- GCG -->
+      <p id="FASTA"><strong>GCG:</strong></p>
+      <pre>
+cf:CPZANT Length: 250 Thu Apr 28 16:08:49 MDT 2011 Check: 751 ..
+  1 ATGGGAGCGG GGGCGTCTGT TTTGAGGGGA GAGAAGCTAG ATACATGGGA
+ 51 AAGTATCAGG CTTCGGCCCG GTGGCAAGAA AAAGTACATG ATAAAACATC
+101 TGGTTTGGGC AAGATCGGAG CTGCAGCGTT TTGCGCTCAG CTCCTCCCTT
+151 CTAGAAACAT CAGAAGGTTG TGAAAAGGCT ATCCATCAAT TGAGCCCTTC
+201 CATAGAAATA AGATCCCCTG AAATAATATC TTTGTTTAAC ACCATTTGTG
+251
+</pre>
+
+      <!-- GenBank -->
+      <p id="FASTA"><strong>GenBank:</strong></p>
+      <pre>
+LOCUS       AAU03518 237 bp DNA PLN 04-FEB-1995
+DEFINITION  Aspergillus awamori internal transcribed spacer 1 (ITS1) and 18S
+            rRNA and 5.8S rRNA genes, partial sequence.
+ACCESSION   U03518
+ORIGIN
+        1 aacctgcgga aggatcatta ccgagtgcgg gtcctttggg cccaacctcc catccgtgtc
+       61 tattgtaccc tgttgcttcg gcgggcccgc cgcttgtcgg ccgccggggg ggcgcctctg
+      121 ccccccgggc ccgtgcccgc cggagacccc aacacgaaca ctgtctgaaa gcgtgcagtc
+      181 tgagttgatt gaatgcaatc agttaaaact ttcaacaatg gatctcttgg ttccggc
+//
+</pre>
+
+      <!-- IG (IntelliGenetics) -->
+      <p id="FASTA"><strong>IG (IntelliGenetics):</strong></p>
+      <pre>;
+CPZANT
+ATGGGAGCGGGGGCGTCTGTTTTGAGGGGAGAGAAGCTAGATACATGGGA
+AAGTATCAGGCTTCGGCCCGGTGGCAAGAAAAAGTACATGATAAAACATC
+TGGTTTGGGCAAGATCGGAGCTGCAGCGTTTTGCGCTCAGCTCCTCCCTT
+CTAGAAACATCAGAAGGTTGTGAAAAGGCTATCCATCAATTGAGCCCTTC
+CATAGAAATAAGATCCCCTGAAATAATATCTTTGTTTAACACCATTTGTG
+;
+U455
+ATGGGTGCGAGAGCGTCAGTATTAAGCGGGAAAAAATTAGATTCATGGGA
+GAAAATTCGGTTAAGGCCAGGGGGAAACAAAAAATATAGACTGAAACATT
+TAGTATGGGCAAGCAGGGAGCTGGAAAAATTCACACTTAACCCTGGCCTT
+TTAGAAACAGCAGAAGGATGTCAGCAAATACTGGGACAATTACAACCAGC
+TCTCCAGACAGGAACAGAAGAACTTAGATCATTATATAATACAGTAGCAG
+</pre>
+      <p>&nbsp;</p>
+
+
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Footer Area -->
+<div style="{text-align: center;}">
+  <div align="center">
+    <p>Please write us if we are missing a format that you find useful, or if you
+      find mistakes in our conversions.</p>
+    <b> Purpose: </b> Questions or comments? Contact us at
+    <a href="mailto:webmaster@example.com">aiqankhalid@gmail.com</a>
+  </div>
+  <br/>
+  <hr>
+  <div align=center>
+    <small><b> DNA Sequence Format Converter Designed By: bc140202299 </b>
+      </br>
+      <b> Muhammad Aiqan Khalid </b></br>
+      BS(CS) Computer Science</br>
+      Virtual University of Pakistan</br>
+      www.fb.com/aiqan</br>
+      +92 332 844 80 37</br>
+      <a> Copyright © 2017-2018 SEE International, All rights reserved</a>
+      <div align=left>
+        </br>
+    </small>
+  </div>
+</div>
+
+<b>
+  <small>-- last modified: Fri April 26 19:20 2018 --</small>
+</b>
+</div>
+
+<script type="text/javascript">
+  function reset_form() {
+      $('#attachment_sequence').val('');
+      $('#attachment_type_id').val(1);
+  }
+</script>
+
+
+
+
+
+
+
+
